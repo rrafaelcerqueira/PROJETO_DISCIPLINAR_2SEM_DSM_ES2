@@ -1,6 +1,6 @@
 # 📋 Nome do Projeto
 
-Projeto desenvolvido para [Engenharia de Softwar II] na faculdade, com foco em front-end. Neste projeto será visado a necessidade do nosso cliente para cuidar de um problema no seu dia a dia. (O projeto tem total valor de nota academica)
+Projeto desenvolvido para [Engenharia de Software II] na faculdade, com foco em front-end. Neste projeto será visado a necessidade do nosso cliente para cuidar de um problema no seu dia a dia. (O projeto tem total valor de nota academica)
 
 ## ⚙️ Funcionalidades
 - [x] Cadastro de tarefas  
