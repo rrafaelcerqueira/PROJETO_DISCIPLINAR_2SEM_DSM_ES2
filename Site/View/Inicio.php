@@ -1,3 +1,6 @@
+<?php
+require_once('../Controller/sessao_admin.php');
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -25,7 +28,7 @@
         <i class="bi bi-x-lg"></i> Remover Fundo
       </button>
       
-      <a href="/Site/index.html" class="text-decoration-none">
+      <a href="../Controller/logout.php" class="text-decoration-none">
         <button class="btn btn-primary btn-sm"> 
           <i class="bi bi-box-arrow-left"></i> Sair
         </button>
@@ -43,35 +46,50 @@
         <div class="card p-3 bg-light shadow">
           <h5 class="text-center fw-bold mb-3">Tarefas</h5>
 
-          <div class="task-item">
-            <span>Fazer Lição de Casa</span>
-            <div>
-              <button class="btn btn-success btn-sm">Concluir</button>
-              <button class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalTarefa">
-                Editar
-              </button>
+          <!-- FORM: concluir tarefa -->
+          <form action="../Controller/processa_concluir_tarefa.php" method="POST">
+            <div class="task-item">
+              <span>Fazer Lição de Casa</span>
+              <div>
+                <input type="hidden" name="id_tarefa" value="1">
+                <button type="submit" class="btn btn-success btn-sm">Concluir</button>
+                <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalTarefa">
+                  Editar
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
+          <!-- /FORM -->
 
-          <div class="task-item">
-            <span>Fazer Compras</span>
-            <div>
-              <button class="btn btn-success btn-sm">Concluir</button>
-              <button class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalTarefa">
-                Editar
-              </button>
+          <!-- FORM: concluir tarefa -->
+          <form action="../Controller/processa_concluir_tarefa.php" method="POST">
+            <div class="task-item">
+              <span>Fazer Compras</span>
+              <div>
+                <input type="hidden" name="id_tarefa" value="2">
+                <button type="submit" class="btn btn-success btn-sm">Concluir</button>
+                <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalTarefa">
+                  Editar
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
+          <!-- /FORM -->
 
-          <div class="task-item">
-            <span>Almoçar</span>
-            <div>
-              <button class="btn btn-success btn-sm">Concluir</button>
-              <button class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalTarefa">
-                Editar
-              </button>
+          <!-- FORM: concluir tarefa -->
+          <form action="../Controller/processa_concluir_tarefa.php" method="POST">
+            <div class="task-item">
+              <span>Almoçar</span>
+              <div>
+                <input type="hidden" name="id_tarefa" value="3">
+                <button type="submit" class="btn btn-success btn-sm">Concluir</button>
+                <button type="button" class="btn btn-secondary btn-sm text-white" data-bs-toggle="modal" data-bs-target="#modalTarefa">
+                  Editar
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
+          <!-- /FORM -->
 
           <div class="container text-end">
             <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTarefa">
@@ -86,12 +104,17 @@
         <div class="card p-3 bg-light shadow">
           <h5 class="text-center fw-bold mb-3">Tarefas Concluídas</h5>
 
-          <div class="task-item">
-            <span>Tomar Banho</span>
-            <div>
-              <button class="btn btn-danger btn-sm">Deletar</button>
+          <!-- FORM: deletar tarefa concluída -->
+          <form action="../Controller/processa_excluir_tarefa.php" method="POST">
+            <div class="task-item">
+              <span>Tomar Banho</span>
+              <div>
+                <input type="hidden" name="id_tarefa" value="4">
+                <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
+              </div>
             </div>
-          </div>
+          </form>
+          <!-- /FORM -->
         </div>
       </div>
 
@@ -107,39 +130,42 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
         <div class="modal-body">
-          <form id="formTarefa">
+
+          <!-- FORM: criar/editar tarefa -->
+          <form id="formTarefa" action="../Controller/processa_add_tarefa.php" method="POST">
             <div class="mb-3">
               <label for="nomeTarefa" class="form-label">Nome:</label>
-              <input type="text" class="form-control" id="nomeTarefa" placeholder="Nome da tarefa">
+              <input type="text" class="form-control" id="nomeTarefa" name="titulo" placeholder="Nome da tarefa">
             </div>
 
             <div class="row mb-3">
               <div class="col">
                 <label for="categoria" class="form-label">Categoria:</label>
-                <select id="categoria" class="form-select">
+                <select id="categoria" class="form-select" name="fk_categoria_id">
                   <option selected disabled>Selecione</option>
                 </select>
               </div>
               <div class="col">
                 <label for="data" class="form-label">Data:</label>
-                <input type="date" id="data" class="form-control">
+                <input type="date" id="data" class="form-control" name="data">
               </div>
             </div>
 
             <button type="button" class="btn btn-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#modalCategoria">
-                <p class="modal-title" id="modalCategoriaLabel">Criar Categoria</p>
+              <p class="modal-title" id="modalCategoriaLabel">Criar Categoria</p>
             </button>
 
             <div class="mb-3">
               <label for="descricao" class="form-label">Descrição:</label>
-              <textarea class="form-control" id="descricao" rows="4"
-                placeholder="Descrição da tarefa"></textarea>
+              <textarea class="form-control" id="descricao" name="descricao" rows="4" placeholder="Descrição da tarefa"></textarea>
             </div>
 
             <div class="text-end">
-              <button type="button" class="btn btn-success">Salvar</button>
+              <button type="submit" class="btn btn-success">Salvar</button>
             </div>
           </form>
+          <!-- /FORM -->
+
         </div>
       </div>
     </div>
@@ -150,23 +176,25 @@
     <div class="modal-dialog">
       <div class="modal-content p-3">
         <div class="modal-header">
-                <h5 class="modal-title" id="modalCategoriaLabel">Criar Categoria</h5>
+          <h5 class="modal-title" id="modalCategoriaLabel">Criar Categoria</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
         <div class="modal-body">
-          <form id="formCategoria">
+
+          <!-- FORM: criar categoria -->
+          <form id="formCategoria" action="../Controller/processa_add_categoria.php" method="POST">
             <div class="mb-3">
               <label for="nomeCategoria" class="form-label">Nome da Categoria:</label>
-              <input type="text" class="form-control" id="nomeCategoria"
-                placeholder="Ex: Pessoal, Trabalho, Estudo...">
+              <input type="text" class="form-control" id="nomeCategoria" name="nome_categoria" placeholder="Ex: Pessoal, Trabalho, Estudo...">
             </div>
             <div class="text-end">
-              <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal"
-                data-bs-target="#modalTarefa">
+              <button type="submit" class="btn btn-success">
                 Salvar
               </button>
             </div>
           </form>
+          <!-- /FORM -->
+
         </div>
       </div>
     </div>
@@ -178,3 +206,4 @@
 </body>
 
 </html>
+  

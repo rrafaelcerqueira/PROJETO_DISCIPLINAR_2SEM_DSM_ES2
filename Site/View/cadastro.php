@@ -12,18 +12,18 @@
   <div class="card shadow-lg p-4" style="width: 320px; border-radius: 15px;">
     <h4 class="text-center fw-bold mb-3 text-decoration-underline">CRIAR CONTA</h4>
     
-    <form>
+    <form method="post" action="../Controller/process_cadastro.php">
       <div class="mb-3">
-        <input type="name" class="form-control" placeholder="Informe seu nome:">
+        <input type="name" class="form-control" name="nome" placeholder="Informe seu nome:">
       </div>
       <div class="mb-3">
-        <input type="email" class="form-control" placeholder="Informe seu Email:">
+        <input type="email" class="form-control" name="email" placeholder="Informe seu Email:">
       </div>
       <div class="mb-3">
-        <input type="password" class="form-control" placeholder="Senha:">
+        <input type="password" class="form-control" name="senha" placeholder="Senha:">
       </div>
       <div class="mb-3">
-        <input type="password" class="form-control" placeholder="Confirmar Senha:">
+        <input type="password" class="form-control" name="senha" placeholder="Confirmar Senha:">
       </div>
 
 

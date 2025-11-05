@@ -10,15 +10,15 @@
 <body style="background-color: #FF9604; height: 100vh; display: flex; justify-content: center; align-items: center;">
     <div class="card shadow-lg p-4" style="width: 320px; border-radius: 15px;">
         <h4 class="text-center fw-bold mb-3 text-decoration-underline">LOGIN</h4>
-        <form action="/Site/Inicio.html">
+        <form action="../Controller/process_login.php" method="POST">
             <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Insira seu email:">
+                <input type="email" class="form-control" name="email" placeholder="Insira seu email:">
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" placeholder="Insira sua senha:">
+                <input type="password" class="form-control" name="senha" placeholder="Insira sua senha:">
             </div>
             <div class="text-center mb-3">
-                <span class="small">Não tem conta? <a href="/Site/cadastra.html " class="small text-decoration-underline">Cadastre-se aqui</a></span>
+                <span class="small">Não tem conta? <a href="cadastro.php" class="small text-decoration-underline">Cadastre-se aqui</a></span>
             </div>
                 <div class="d-grid">
                     <button class="btn btn-primary fw-bold">ENTRAR</button>
