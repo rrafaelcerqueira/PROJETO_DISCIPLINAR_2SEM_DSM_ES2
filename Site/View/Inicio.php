@@ -23,7 +23,7 @@
         <i class="bi bi-x-lg"></i> Remover Fundo
       </button>
       <a href="../Controller/logout.php" class="text-decoration-none">
-        <button class="btn btn-primary btn-sm"> 
+        <button class="btn btn-primary btn-sm">
           <i class="bi bi-box-arrow-left"></i> Sair
         </button>
       </a>
@@ -36,39 +36,22 @@
       <div class="col-md-4">
         <div class="card p-3 bg-light shadow">
           <h5 class="text-center fw-bold mb-4">Tarefas</h5>
-          <form action="../Controller/processa_concluir_tarefa.php" method="POST">
-            <a href="edita_tarefa.php">
-            <div class="task-item">
+          <div class="task-wrapper mb-2" style="position: relative;">
+            <div class="task-item d-flex justify-content-between align-items-center p-2 bg-white rounded shadow-sm">
               <span>Fazer Lição de Casa</span>
-              <div>
+              <form action="../Controller/processa_concluir_tarefa.php" method="POST" class="m-0 position-relative" style="z-index: 2;">
                 <input type="hidden" name="id_tarefa" value="1">
                 <button type="submit" class="btn btn-success btn-sm">Concluir</button>
-              </div>
+              </form>
             </div>
-            </a>
-          </form>
-          <form action="../Controller/processa_concluir_tarefa.php" method="POST">
-            <div class="task-item">
-              <span>Fazer Compras</span>
-              <div>
-                <input type="hidden" name="id_tarefa" value="2">
-                <button type="submit" class="btn btn-success btn-sm">Concluir</button>
-              </div>
-            </div>
-          </form>
-          <form action="../Controller/processa_concluir_tarefa.php" method="POST">
-            <div class="task-item">
-              <span>Almoçar</span>
-              <div>
-                <input type="hidden" name="id_tarefa" value="3">
-                <button type="submit" class="btn btn-success btn-sm">Concluir</button>
-              </div>
-            </div>
-          </form>
+            <a href="edita_tarefa.php" class="stretched-link" aria-label="Editar Tarefa"></a>
+          </div>
           <div class="container text-end">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTarefa">
-              Nova Tarefa
-            </button>
+            <a href="cria_tarefa.php">
+              <button class="btn btn-primary btn-sm">
+                Nova Tarefa
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -95,4 +78,3 @@
 </body>
 
 </html>
-  

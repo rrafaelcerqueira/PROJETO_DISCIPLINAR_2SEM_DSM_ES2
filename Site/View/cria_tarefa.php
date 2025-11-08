@@ -43,11 +43,9 @@
                         <a href="edita_tarefa.php" class="stretched-link" aria-label="Editar Tarefa"></a>
                     </div>
                     <div class="container text-end">
-                        <a href="cria_tarefa.php">
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTarefa">
-                                Nova Tarefa
-                            </button>
-                        </a>
+                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTarefa">
+                            Nova Tarefa
+                        </button>
                     </div>
                 </div>
             </div>
@@ -72,7 +70,7 @@
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="editar-tab" data-bs-toggle="tab" data-bs-target="#editar-pane" type="button" role="tab" aria-controls="editar-pane" aria-selected="true">
-                                    Editar Tarefa
+                                    Criar Tarefa
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -108,7 +106,7 @@
                                         <textarea class="form-control" id="taskDescription" name="descricao_tarefa" rows="5"></textarea>
                                     </div>
                                     <div class="text-end mt-3">
-                                        <button type="submit" class="btn btn-primary ms-2">Salvar Alterações</button>
+                                        <button type="submit" class="btn btn-primary ms-2">Criar Tarefa</button>
                                         <a href="Inicio.php">
                                             <button type="button" class="btn btn-danger">Cancelar</button>
                                         </a>
