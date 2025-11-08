@@ -2,6 +2,7 @@
 require_once('sessao.php');
 require_once('../Model/Database.php');
 require_once('../Model/Categoria.php');
+$mensagens = include('../config/mensagens.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
@@ -11,9 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $categoria->id = $_POST['id_categoria'];
     $categoria->fk_usuario_id = $_SESSION['id'];
-    $categoria->excluir();
+    
+    if($categoria->excluir()){
+        $_SESSION['msg_sucesso'] = $mensagens['categoria_excluida'];
+    }
 
-    header("Location: ../View/cria_tarefa.php?sucesso_cat=2");
+    header("Location: " . $_SERVER['HTTP_REFERER']);
 
 } else {
     header("Location: ../View/Inicio.php");

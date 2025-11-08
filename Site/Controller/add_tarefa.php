@@ -10,11 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tarefa = new Tarefa($db);
 
     $tarefa->nome = $_POST['nome'];
-    $tarefa->data = $_POST['data'];
+    $tarefa->data_expiracao = $_POST['data'];
     $tarefa->descricao = $_POST['descricao'];
     $tarefa->fk_categoria_id = !empty($_POST['fk_categoria_id']) ? $_POST['fk_categoria_id'] : null;
     $tarefa->fk_usuario_id = $_SESSION['id'];
-    $tarefa->fk_estado_id = 1; 
 
     if (empty($tarefa->fk_usuario_id)) {
         $_SESSION['msg_erro'] = $mensagens['sessao_invalida'];

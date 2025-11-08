@@ -15,6 +15,7 @@ return [
     'login_necessario' => 'Você precisa estar logado para acessar esta página.',
     'sessao_invalida' => 'Sua sessão é inválida ou expirou. Faça login.',
     'email_em_uso' => 'Este email já está em uso.',
+    'senhas_nao_conferem' => 'As senhas informadas não são idênticas.',
     'id_nao_fornecido' => 'Nenhum item foi selecionado.',
     'tarefa_invalida' => 'Tarefa não encontrada ou não pertence a você.',
 ];

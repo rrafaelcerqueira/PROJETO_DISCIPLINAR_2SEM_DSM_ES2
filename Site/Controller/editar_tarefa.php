@@ -2,6 +2,7 @@
 require_once('sessao.php');
 require_once('../Model/Database.php');
 require_once('../Model/Tarefa.php');
+$mensagens = include('../config/mensagens.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -9,18 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $db = $database->getConnection();
     $tarefa = new Tarefa($db);
 
+    $tarefa->id = $_POST['id_tarefa'];
     $tarefa->nome = $_POST['nome'];
-    $tarefa->data = $_POST['data'];
+    $tarefa->data_expiracao = $_POST['data'];
     $tarefa->descricao = $_POST['descricao'];
     $tarefa->fk_categoria_id = !empty($_POST['fk_categoria_id']) ? $_POST['fk_categoria_id'] : null;
-    $tarefa->fk_estado_id = $_POST['fk_estado_id'];
 
     $tarefa->fk_usuario_id = $_SESSION['id'];
 
     if ($tarefa->editar()) {
-        header("Location: ../View/Inicio.php?sucesso=2");
+        $_SESSION['msg_sucesso'] = $mensagens['tarefa_editada'];
+        header("Location: ../View/Inicio.php");
     } else {
-        header("Location: ../View/edita_tarefa.php?id=" . $tarefa->id . "&erro=1");
+        $_SESSION['msg_erro'] = $mensagens['erro_generico'];
+        header("Location: ../View/edita_tarefa.php?id=" . $tarefa->id);
     }
 } else {
     header("Location: ../View/Inicio.php");

@@ -70,7 +70,8 @@ $listaTarefasConcluidas = $tarefa->listarPorEstado();
               <tr>
                 <th scope="col" style="width: 15%;">Categoria</th>
                 <th scope="col" style="width: 20%;">Nome</th>
-                <th scope="col" style="width: 15%;">Data</th> <th scope="col" style="width: 35%;">Descrição</th>
+                <th scope="col" style="width: 15%;">Expiração</th> 
+                <th scope="col" style="width: 35%;">Descrição</th>
                 <th scope="col" style="width: 15%;" class="text-center">Ações</th>
               </tr>
             </thead>
@@ -82,13 +83,20 @@ $listaTarefasConcluidas = $tarefa->listarPorEstado();
                     <td><?php echo htmlspecialchars($row['nome']); ?></td>
                     <td>
                       <?php 
-                        if (!empty($row['data'])) {
-                            echo date('d/m/Y', strtotime($row['data']));
+                        if (!empty($row['data_expiracao'])) {
+                            echo date('d/m/Y', strtotime($row['data_expiracao']));
                         } else {
                             echo 'N/A';
                         }
                       ?>
-                    </td> <td><?php echo htmlspecialchars($row['descricao']); ?></td>
+                    </td> 
+                    <td>
+                      <?php if (!empty($row['descricao'])): ?>
+                        <button type="button" class="btn btn-sm btn-outline-secondary py-0 px-2" data-bs-toggle="modal" data-bs-target="#descModal<?php echo $row['id']; ?>">
+                          Ver Descrição
+                        </button>
+                      <?php else: echo 'N/A'; endif; ?>
+                    </td>
                     <td class="text-center">
                       <a href="edita_tarefa.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info text-white me-2" title="Editar">
                         <i class="bi bi-pencil"></i>
@@ -102,6 +110,20 @@ $listaTarefasConcluidas = $tarefa->listarPorEstado();
                       </form>
                     </td>
                   </tr>
+
+                  <div class="modal fade" id="descModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="modalTitle<?php echo $row['id']; ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="modalTitle<?php echo $row['id']; ?>">Descrição: <?php echo htmlspecialchars($row['nome']); ?></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <?php echo nl2br(htmlspecialchars($row['descricao'])); ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <?php endwhile; ?>
               <?php else : ?>
                 <tr>
@@ -129,7 +151,14 @@ $listaTarefasConcluidas = $tarefa->listarPorEstado();
             <?php while ($row = $listaTarefasConcluidas->fetch_assoc()) : ?>
               <form action="../Controller/excluir_tarefa.php" method="POST">
                 <div class="task-item">
-                  <span><?php echo htmlspecialchars($row['nome']); ?></span>
+                  <div>
+                    <span><?php echo htmlspecialchars($row['nome']); ?></span>
+                    <br>
+                    <small class="text-muted">
+                      Concluído em: 
+                      <?php echo date('d/m/Y', strtotime($row['data_conclusao'])); ?>
+                    </small>
+                  </div>
                   <div>
                     <input type="hidden" name="id_tarefa" value="<?php echo $row['id']; ?>">
                     <button type="submit" class="btn btn-danger btn-sm">Deletar</button>

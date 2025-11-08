@@ -1,9 +1,16 @@
 <?php 
-
+session_start();
 require_once('../Model/Database.php');
 require_once('../Model/Usuario.php');
+$mensagens = include('../config/mensagens.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    if ($_POST['senha'] != $_POST['confirmar_senha']) {
+        $_SESSION['msg_erro'] = $mensagens['senhas_nao_conferem'];
+        header("Location: ../View/cadastro.php");
+        exit();
+    }
 
     $database = new Database();
     $db = $database->getConnection();
@@ -14,15 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $usuario->senha = $_POST['senha'];
 
     if ($usuario->emailExiste()){
-        header("Location: ../View/cadastro.php?erro=2");
+        $_SESSION['msg_erro'] = $mensagens['email_em_uso'];
+        header("Location: ../View/cadastro.php");
         exit();
     }
 
     if ($usuario->cadastrar()){
-        header("Location: ../View/login.php?sucesso=1");
+        $_SESSION['msg_sucesso'] = $mensagens['cadastro_ok'];
+        header("Location: ../View/login.php");
         exit();
     } else{
-        header("Location: ../View/cadastro.php?erro=1");
+        $_SESSION['msg_erro'] = $mensagens['erro_generico'];
+        header("Location: ../View/cadastro.php");
         exit();
     }
 } else{

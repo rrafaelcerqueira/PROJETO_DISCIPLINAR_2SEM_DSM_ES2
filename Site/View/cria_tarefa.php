@@ -9,10 +9,8 @@ $categoria = new Categoria($db);
 
 $categoria->fk_usuario_id = $_SESSION['id']; 
 
-// 1. BUSCA AS CATEGORIAS DO BANCO
 $resultadoCategorias = $categoria->listar();
 
-// 2. GUARDA OS RESULTADOS EM UM ARRAY PHP
 $listaCategoriasArray = [];
 while ($row = $resultadoCategorias->fetch_assoc()) {
     $listaCategoriasArray[] = $row;
@@ -32,8 +30,17 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
     
     <nav class="navbar navbar-light bg-light shadow-sm px-3">
         <div class="container-fluid d-flex justify-content-end align-items-center">
+            <label for="uploadBackground" class="btn btn-secondary btn-sm me-2">
+                <i class="bi bi-image"></i> Mudar Fundo
+            </label>
+            <input type="file" id="uploadBackground" accept="image/*" style="display: none;">
+            <button id="removeBackground" class="btn btn-outline-danger btn-sm me-2">
+                <i class="bi bi-x-lg"></i> Remover Fundo
+            </button>
             <a href="../Controller/logout.php" class="text-decoration-none">
-                <button class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-left"></i> Sair</button>
+                <button class="btn btn-primary btn-sm">
+                    <i class="bi bi-box-arrow-left"></i> Sair
+                </button>
             </a>
         </div>
     </nav>
@@ -81,7 +88,7 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="taskDate" class="form-label">Data:</label>
+                                            <label for="taskDate" class="form-label">Data de Expiração:</label>
                                             <input type="date" class="form-control" id="taskDate" name="data">
                                         </div>
                                     </div>

@@ -2,6 +2,7 @@
 require_once('sessao.php');
 require_once('../Model/Database.php');
 require_once('../Model/Tarefa.php');
+$mensagens = include('../config/mensagens.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
@@ -13,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tarefa->fk_usuario_id = $_SESSION['id'];
 
     $tarefa->excluir(); 
+    $_SESSION['msg_sucesso'] = $mensagens['tarefa_excluida'];
 
     header("Location: ../View/Inicio.php");
 } else {

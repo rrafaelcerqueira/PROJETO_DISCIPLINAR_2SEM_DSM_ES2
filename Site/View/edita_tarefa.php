@@ -3,6 +3,7 @@ require_once('../Controller/sessao.php');
 require_once('../Model/Database.php');
 require_once('../Model/Tarefa.php');
 require_once('../Model/Categoria.php');
+$mensagens = include('../config/mensagens.php');
 
 $database = new Database();
 $db = $database->getConnection();
@@ -14,7 +15,6 @@ $usuario_id = $_SESSION['id'];
 $tarefa->fk_usuario_id = $usuario_id;
 $categoria->fk_usuario_id = $usuario_id;
 
-// 1. BUSCA AS CATEGORIAS E SALVA EM UM ARRAY
 $resultadoCategorias = $categoria->listar();
 $listaCategoriasArray = [];
 while ($row = $resultadoCategorias->fetch_assoc()) {
@@ -22,7 +22,8 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
 }
 
 if (!isset($_GET['id'])) {
-    header("Location: Inicio.php?erro=ID_nao_fornecido");
+    $_SESSION['msg_erro'] = $mensagens['id_nao_fornecido'];
+    header("Location: Inicio.php");
     exit();
 }
 
@@ -30,7 +31,8 @@ $tarefa->id = $_GET['id'];
 $dadosTarefa = $tarefa->buscaID(); 
 
 if ($dadosTarefa === false) {
-    header("Location: Inicio.php?erro=tarefa_invalida"); 
+    $_SESSION['msg_erro'] = $mensagens['tarefa_invalida'];
+    header("Location: Inicio.php"); 
     exit();
 }
 ?>
@@ -48,8 +50,17 @@ if ($dadosTarefa === false) {
 
     <nav class="navbar navbar-light bg-light shadow-sm px-3">
         <div class="container-fluid d-flex justify-content-end align-items-center">
+            <label for="uploadBackground" class="btn btn-secondary btn-sm me-2">
+                <i class="bi bi-image"></i> Mudar Fundo
+            </label>
+            <input type="file" id="uploadBackground" accept="image/*" style="display: none;">
+            <button id="removeBackground" class="btn btn-outline-danger btn-sm me-2">
+                <i class="bi bi-x-lg"></i> Remover Fundo
+            </button>
             <a href="../Controller/logout.php" class="text-decoration-none">
-                <button class="btn btn-primary btn-sm"><i class="bi bi-box-arrow-left"></i> Sair</button>
+                <button class="btn btn-primary btn-sm">
+                    <i class="bi bi-box-arrow-left"></i> Sair
+                </button>
             </a>
         </div>
     </nav>
@@ -57,6 +68,9 @@ if ($dadosTarefa === false) {
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
+
+                <?php include_once('alertas.php'); ?>
+
                 <div class="card shadow-sm border-0 task-card">
                     <div class="card-header bg-transparent border-bottom-0">
                         <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
@@ -98,17 +112,11 @@ if ($dadosTarefa === false) {
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="taskDate" class="form-label">Data:</label>
-                                            <input type="date" class="form-control" id="taskDate" name="data" value="<?php echo $dadosTarefa['data']; ?>">
+                                            <label for="taskDate" class="form-label">Data de Expiração:</label>
+                                            <input type="date" class="form-control" id="taskDate" name="data" value="<?php echo $dadosTarefa['data_expiracao']; ?>">
                                         </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="estado" class="form-label">Estado:</label>
-                                        <select id="estado" class="form-select" name="fk_estado_id">
-                                            <option value="1" <?php echo ($dadosTarefa['fk_estado_id'] == 1) ? 'selected' : ''; ?>>Pendente</option>
-                                            <option value="2" <?php echo ($dadosTarefa['fk_estado_id'] == 2) ? 'selected' : ''; ?>>Concluída</option>
-                                        </select>
-                                    </div>
+                                    
                                     <div class="mb-3">
                                         <label for="taskDescription" class="form-label">Descrição:</label>
                                         <textarea class="form-control" id="taskDescription" name="descricao" rows="5"><?php echo htmlspecialchars($dadosTarefa['descricao']); ?></textarea>
