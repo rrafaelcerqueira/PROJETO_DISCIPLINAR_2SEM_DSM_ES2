@@ -5,6 +5,7 @@ require_once('../Model/Tarefa.php');
 $mensagens = include('../config/mensagens.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     $database = new Database();
     $db = $database->getConnection();
     $tarefa = new Tarefa($db);
@@ -24,12 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($tarefa->criar()) {
         $_SESSION['msg_sucesso'] = $mensagens['tarefa_criada'];
         header("Location: ../View/Inicio.php");
+        exit();
     } else {
         $_SESSION['msg_erro'] = $mensagens['erro_generico'];
         header("Location: ../View/cria_tarefa.php");
+        exit();
     }
 } else {
     header("Location: ../View/Inicio.php");
+    exit();
 }
-exit();
-?>

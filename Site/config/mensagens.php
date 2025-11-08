@@ -6,10 +6,11 @@ return [
     'tarefa_excluida' => 'Tarefa excluída com sucesso.',
 
     'categoria_criada' => 'Categoria criada com sucesso!',
+    'categoria_editada' => 'Categoria editada com sucesso!',
     'categoria_excluida' => 'Categoria excluída com sucesso!',
-    
+
     'cadastro_ok' => 'Cadastro realizado! Faça seu login.',
-    
+
     'erro_generico' => 'Erro ao processar a solicitação. Tente novamente.',
     'login_invalido' => 'Email ou senha incorretos.',
     'login_necessario' => 'Você precisa estar logado para acessar esta página.',
@@ -19,4 +20,3 @@ return [
     'id_nao_fornecido' => 'Nenhum item foi selecionado.',
     'tarefa_invalida' => 'Tarefa não encontrada ou não pertence a você.',
 ];
-?>

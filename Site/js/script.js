@@ -54,4 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadBackground();
 
+document.querySelectorAll('.edit-categoria').forEach(button => {
+    button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        const nome = this.getAttribute('data-nome');
+        
+        document.getElementById('edit_id_categoria').value = id;
+        document.getElementById('edit_nome_categoria').value = nome;
+        
+        const modal = new bootstrap.Modal(document.getElementById('editCategoriaModal'));
+        modal.show();
+    });
+});
+
 });

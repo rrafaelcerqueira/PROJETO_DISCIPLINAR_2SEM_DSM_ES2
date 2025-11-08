@@ -1,5 +1,5 @@
 <?php
-require_once('../Controller/sessao.php'); 
+require_once('../Controller/sessao.php');
 require_once('../Model/Database.php');
 require_once('../Model/Categoria.php');
 
@@ -7,7 +7,7 @@ $database = new Database();
 $db = $database->getConnection();
 $categoria = new Categoria($db);
 
-$categoria->fk_usuario_id = $_SESSION['id']; 
+$categoria->fk_usuario_id = $_SESSION['id'];
 
 $resultadoCategorias = $categoria->listar();
 
@@ -18,6 +18,7 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,8 +27,9 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
-    
+
     <nav class="navbar navbar-light bg-light shadow-sm px-3">
         <div class="container-fluid d-flex justify-content-end align-items-center">
             <label for="uploadBackground" class="btn btn-secondary btn-sm me-2">
@@ -68,7 +70,7 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
                     </div>
                     <div class="card-body p-4">
                         <div class="tab-content" id="myTabContent">
-                            
+
                             <div class="tab-pane fade show active" id="criar-pane" role="tabpanel" aria-labelledby="criar-tab">
                                 <form action="../Controller/add_tarefa.php" method="POST">
                                     <div class="mb-3">
@@ -80,9 +82,9 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
                                             <label for="taskCategory" class="form-label">Categoria:</label>
                                             <select class="form-select" id="taskCategory" name="fk_categoria_id">
                                                 <option selected disabled value="">Selecione...</option>
-                                                
+
                                                 <?php foreach ($listaCategoriasArray as $row_cat) : ?>
-                                                  <option value="<?php echo $row_cat['id']; ?>"><?php echo htmlspecialchars($row_cat['nome']); ?></option>
+                                                    <option value="<?php echo $row_cat['id']; ?>"><?php echo htmlspecialchars($row_cat['nome']); ?></option>
                                                 <?php endforeach; ?>
 
                                             </select>
@@ -102,7 +104,7 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
                                     </div>
                                 </form>
                             </div>
-                            
+
                             <div class="tab-pane fade" id="categorias-pane" role="tabpanel" aria-labelledby="categorias-tab">
                                 <form action="../Controller/add_categoria.php" method="POST">
                                     <div class="mb-3">
@@ -116,15 +118,24 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
                                 <hr>
                                 <label class="form-label">Categorias Criadas:</label>
                                 <div class="category-list-container" style="max-height: 250px; overflow-y: auto;">
-                                    
+
                                     <?php foreach ($listaCategoriasArray as $row_cat) : ?>
-                                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                                        <span><?php echo htmlspecialchars($row_cat['nome']); ?></span>
-                                        <form action="../Controller/excluir_categoria.php" method="POST" class="m-0">
-                                            <input type="hidden" name="id_categoria" value="<?php echo $row_cat['id']; ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
-                                        </form>
-                                    </div>
+                                        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                                            <span><?php echo htmlspecialchars($row_cat['nome']); ?></span>
+                                            <div>
+                                                <button type="button" class="btn btn-warning btn-sm me-2 edit-categoria"
+                                                    data-id="<?php echo $row_cat['id']; ?>"
+                                                    data-nome="<?php echo htmlspecialchars($row_cat['nome']); ?>">
+                                                    <i class="bi bi-pencil"></i> Editar
+                                                </button>
+                                                <form action="../Controller/excluir_categoria.php" method="POST" class="d-inline m-0">
+                                                    <input type="hidden" name="id_categoria" value="<?php echo $row_cat['id']; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i> Deletar
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     <?php endforeach; ?>
 
                                 </div>
@@ -136,7 +147,32 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
         </div>
     </div>
 
+    <div class="modal fade" id="editCategoriaModal" tabindex="-1" aria-labelledby="editCategoriaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="../Controller/editar_categoria.php" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoriaModalLabel">Editar Categoria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_id_categoria" name="id_categoria">
+                        <div class="mb-3">
+                            <label for="edit_nome_categoria" class="form-label">Nome da Categoria:</label>
+                            <input type="text" class="form-control" id="edit_nome_categoria" name="nome_categoria" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/script.js"></script>
 </body>
+
 </html>

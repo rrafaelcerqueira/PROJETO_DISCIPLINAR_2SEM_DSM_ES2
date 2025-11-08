@@ -96,10 +96,14 @@ class Categoria
     //Metodo de edição de categoria
     public function editar()
     {
-        $query = "UPDATE " . $this->tabela_categoria . " SET nome = ? WHERE id = ?";
+        $query = "UPDATE " . $this->tabela_categoria . " 
+                  SET nome = ? 
+                  WHERE id = ? AND fk_usuario_id = ?";
         $stmt = $this->conn->prepare($query);
+        $this->nome = htmlspecialchars(strip_tags($this->nome));
         $stmt->bind_param("sii", $this->nome, $this->id, $this->fk_usuario_id);
-        if ($stmt->execute()){
+
+        if ($stmt->execute()) {
             return true;
         }
         return false;

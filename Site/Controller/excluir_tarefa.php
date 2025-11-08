@@ -5,7 +5,7 @@ require_once('../Model/Tarefa.php');
 $mensagens = include('../config/mensagens.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
+
     $database = new Database();
     $db = $database->getConnection();
     $tarefa = new Tarefa($db);
@@ -13,12 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tarefa->id = $_POST['id_tarefa'];
     $tarefa->fk_usuario_id = $_SESSION['id'];
 
-    $tarefa->excluir(); 
-    $_SESSION['msg_sucesso'] = $mensagens['tarefa_excluida'];
-
-    header("Location: ../View/Inicio.php");
+    if ($tarefa->excluir()) {
+        $_SESSION['msg_sucesso'] = $mensagens['tarefa_excluida'];
+        header("Location: ../View/Inicio.php");
+        exit();
+    } else {
+        $_SESSION['msg_erro'] = $mensagens['erro_generico'];
+        header("Location: ../View/Inicio.php");
+        exit();
+    }
 } else {
     header("Location: ../View/Inicio.php");
+    exit();
 }
-exit();
-?>

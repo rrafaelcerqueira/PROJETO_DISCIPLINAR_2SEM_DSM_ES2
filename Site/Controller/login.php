@@ -1,10 +1,11 @@
-<?php 
+<?php
 session_start();
-require_once '../Model/Database.php';
-require_once '../Model/Usuario.php';
+require_once('../Model/Database.php');
+require_once('../Model/Usuario.php');
 $mensagens = include('../config/mensagens.php');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     $database = new Database();
     $db = $database->getConnection();
     $usuario = new Usuario($db);
@@ -12,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $usuario->email = $_POST['email'];
     $usuario->senha = $_POST['senha'];
 
-    if ($usuario->login()){
+    if ($usuario->login()) {
         $_SESSION['id'] = $usuario->id;
         $_SESSION['usuario'] = $usuario->nome;
         header("Location: ../View/Inicio.php");
@@ -26,4 +27,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     header("Location: ../View/login.php");
     exit();
 }
-?>
