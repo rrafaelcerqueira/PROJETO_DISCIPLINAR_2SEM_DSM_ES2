@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,20 +13,21 @@
   <div class="card shadow-lg p-4" style="width: 320px; border-radius: 15px;">
     <h4 class="text-center fw-bold mb-3 text-decoration-underline">CRIAR CONTA</h4>
     
-    <form method="post" action="../Controller/process_cadastro.php">
-      <div class="mb-3">
-        <input type="name" class="form-control" name="nome" placeholder="Informe seu nome:">
-      </div>
-      <div class="mb-3">
-        <input type="email" class="form-control" name="email" placeholder="Informe seu Email:">
-      </div>
-      <div class="mb-3">
-        <input type="password" class="form-control" name="senha" placeholder="Senha:">
-      </div>
-      <div class="mb-3">
-        <input type="password" class="form-control" name="senha" placeholder="Confirmar Senha:">
-      </div>
+    <?php include_once('alertas.php'); ?>
 
+    <form method="post" action="../Controller/cadastro.php">
+      <div class="mb-3">
+        <input type="name" class="form-control" name="nome" placeholder="Informe seu nome:" required>
+      </div>
+      <div class="mb-3">
+        <input type="email" class="form-control" name="email" placeholder="Informe seu Email:" required>
+      </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" name="senha" placeholder="Senha:" required>
+      </div>
+      <div class="mb-3">
+        <input type="password" class="form-control" name="confirmar_senha" placeholder="Confirmar Senha:" required>
+      </div>
 
       <div class="d-grid">
         <button type="submit" class="btn btn-primary fw-bold">CRIAR CONTA</button>
