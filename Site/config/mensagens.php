@@ -8,6 +8,8 @@ return [
     'categoria_criada' => 'Categoria criada com sucesso!',
     'categoria_editada' => 'Categoria editada com sucesso!',
     'categoria_excluida' => 'Categoria excluída com sucesso!',
+    'categoria_em_uso' => 'Não é possível excluir esta categoria pois ela está sendo usada por uma ou mais tarefas.',
+
 
     'cadastro_ok' => 'Cadastro realizado! Faça seu login.',
 

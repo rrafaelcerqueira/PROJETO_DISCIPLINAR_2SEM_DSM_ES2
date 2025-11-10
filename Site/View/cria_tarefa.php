@@ -30,22 +30,19 @@ while ($row = $resultadoCategorias->fetch_assoc()) {
 
 <body>
 
-    <nav class="navbar navbar-light bg-light shadow-sm px-3">
-        <div class="container-fluid d-flex justify-content-end align-items-center">
-            <label for="uploadBackground" class="btn btn-secondary btn-sm me-2">
-                <i class="bi bi-image"></i> Mudar Fundo
-            </label>
-            <input type="file" id="uploadBackground" accept="image/*" style="display: none;">
-            <button id="removeBackground" class="btn btn-outline-danger btn-sm me-2">
-                <i class="bi bi-x-lg"></i> Remover Fundo
-            </button>
-            <a href="../Controller/logout.php" class="text-decoration-none">
-                <button class="btn btn-primary btn-sm">
-                    <i class="bi bi-box-arrow-left"></i> Sair
-                </button>
-            </a>
-        </div>
-    </nav>
+    <input type="file" id="uploadBackground" accept="image/*" style="display: none;">
+
+    <div class="floating-buttons">
+        <button id="logoutBtn" class="btn btn-danger btn-floating mb-2" title="Sair">
+            <i class="bi bi-box-arrow-left"></i>
+        </button>
+        <label for="uploadBackground" class="btn btn-primary btn-floating mb-2" title="Mudar Fundo">
+            <i class="bi bi-image"></i>
+        </label>
+        <button id="removeBackground" class="btn btn-secondary btn-floating" title="Remover Fundo">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
 
     <div class="container py-5">
         <div class="row justify-content-center">

@@ -67,7 +67,7 @@ class Categoria
     //Metodo de exclusão de categoria
     public function excluir()
     {
-        $query = "DELETE FROM " . $this->tabela_categoria . " WHERE id = ? AND fK_usuario_id = ?";
+        $query = "DELETE FROM categoria WHERE id = ? AND fk_usuario_id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("ii", $this->id, $this->fk_usuario_id);
 
@@ -76,6 +76,7 @@ class Categoria
         }
         return false;
     }
+
 
     //Metodo de busca de categoria usando id
     public function buscaID()

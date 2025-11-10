@@ -1,5 +1,5 @@
 <?php
-require_once('../Controller/sessao.php'); 
+require_once('../Controller/sessao.php');
 require_once('../Model/Database.php');
 require_once('../Model/Tarefa.php');
 require_once('../Model/Categoria.php');
@@ -28,16 +28,17 @@ if (!isset($_GET['id'])) {
 }
 
 $tarefa->id = $_GET['id'];
-$dadosTarefa = $tarefa->buscaID(); 
+$dadosTarefa = $tarefa->buscaID();
 
 if ($dadosTarefa === false) {
     $_SESSION['msg_erro'] = $mensagens['tarefa_invalida'];
-    header("Location: Inicio.php"); 
+    header("Location: Inicio.php");
     exit();
 }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,24 +47,22 @@ if ($dadosTarefa === false) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
 
-    <nav class="navbar navbar-light bg-light shadow-sm px-3">
-        <div class="container-fluid d-flex justify-content-end align-items-center">
-            <label for="uploadBackground" class="btn btn-secondary btn-sm me-2">
-                <i class="bi bi-image"></i> Mudar Fundo
-            </label>
-            <input type="file" id="uploadBackground" accept="image/*" style="display: none;">
-            <button id="removeBackground" class="btn btn-outline-danger btn-sm me-2">
-                <i class="bi bi-x-lg"></i> Remover Fundo
-            </button>
-            <a href="../Controller/logout.php" class="text-decoration-none">
-                <button class="btn btn-primary btn-sm">
-                    <i class="bi bi-box-arrow-left"></i> Sair
-                </button>
-            </a>
-        </div>
-    </nav>
+    <input type="file" id="uploadBackground" accept="image/*" style="display: none;">
+
+    <div class="floating-buttons">
+        <button id="logoutBtn" class="btn btn-danger btn-floating mb-2" title="Sair">
+            <i class="bi bi-box-arrow-left"></i>
+        </button>
+        <label for="uploadBackground" class="btn btn-primary btn-floating mb-2" title="Mudar Fundo">
+            <i class="bi bi-image"></i>
+        </label>
+        <button id="removeBackground" class="btn btn-secondary btn-floating" title="Remover Fundo">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
 
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -88,11 +87,11 @@ if ($dadosTarefa === false) {
                     </div>
                     <div class="card-body p-4">
                         <div class="tab-content" id="myTabContent">
-                            
+
                             <div class="tab-pane fade show active" id="editar-pane" role="tabpanel" aria-labelledby="editar-tab">
                                 <form action="../Controller/editar_tarefa.php" method="POST">
                                     <input type="hidden" name="id_tarefa" value="<?php echo $dadosTarefa['id']; ?>">
-                                    
+
                                     <div class="mb-3">
                                         <label for="taskName" class="form-label">Nome:</label>
                                         <input type="text" class="form-control" id="taskName" name="nome" value="<?php echo htmlspecialchars($dadosTarefa['nome']); ?>" required>
@@ -102,11 +101,11 @@ if ($dadosTarefa === false) {
                                             <label for="taskCategory" class="form-label">Categoria:</label>
                                             <select class="form-select" id="taskCategory" name="fk_categoria_id">
                                                 <option value="">Selecione...</option>
-                                                
-                                                <?php foreach ($listaCategoriasArray as $row_cat) : 
+
+                                                <?php foreach ($listaCategoriasArray as $row_cat) :
                                                     $selected = ($row_cat['id'] == $dadosTarefa['fk_categoria_id']) ? 'selected' : '';
                                                 ?>
-                                                  <option value="<?php echo $row_cat['id']; ?>" <?php echo $selected; ?>><?php echo htmlspecialchars($row_cat['nome']); ?></option>
+                                                    <option value="<?php echo $row_cat['id']; ?>" <?php echo $selected; ?>><?php echo htmlspecialchars($row_cat['nome']); ?></option>
                                                 <?php endforeach; ?>
 
                                             </select>
@@ -116,7 +115,7 @@ if ($dadosTarefa === false) {
                                             <input type="date" class="form-control" id="taskDate" name="data" value="<?php echo $dadosTarefa['data_expiracao']; ?>">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="taskDescription" class="form-label">Descrição:</label>
                                         <textarea class="form-control" id="taskDescription" name="descricao" rows="5"><?php echo htmlspecialchars($dadosTarefa['descricao']); ?></textarea>
@@ -127,7 +126,7 @@ if ($dadosTarefa === false) {
                                     </div>
                                 </form>
                             </div>
-                            
+
                             <div class="tab-pane fade" id="categorias-pane" role="tabpanel" aria-labelledby="categorias-tab">
                                 <form action="../Controller/add_categoria.php" method="POST">
                                     <div class="mb-3">
@@ -141,17 +140,26 @@ if ($dadosTarefa === false) {
                                 <hr>
                                 <label class="form-label">Categorias Criadas:</label>
                                 <div class="category-list-container" style="max-height: 250px; overflow-y: auto;">
-                                    
+
                                     <?php foreach ($listaCategoriasArray as $row_cat) : ?>
-                                    <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                                        <span><?php echo htmlspecialchars($row_cat['nome']); ?></span>
-                                        <form action="../Controller/excluir_categoria.php" method="POST" class="m-0">
-                                            <input type="hidden" name="id_categoria" value="<?php echo $row_cat['id']; ?>">
-                                            <button type="submit" class="btn btn-danger btn-sm">Deletar</button>
-                                        </form>
-                                    </div>
+                                        <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                                            <span><?php echo htmlspecialchars($row_cat['nome']); ?></span>
+                                            <div>
+                                                <button type="button" class="btn btn-warning btn-sm me-2 edit-categoria"
+                                                    data-id="<?php echo $row_cat['id']; ?>"
+                                                    data-nome="<?php echo htmlspecialchars($row_cat['nome']); ?>">
+                                                    <i class="bi bi-pencil"></i> Editar
+                                                </button>
+                                                <form action="../Controller/excluir_categoria.php" method="POST" class="d-inline m-0">
+                                                    <input type="hidden" name="id_categoria" value="<?php echo $row_cat['id']; ?>">
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i> Deletar
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     <?php endforeach; ?>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -161,7 +169,32 @@ if ($dadosTarefa === false) {
         </div>
     </div>
 
+    <div class="modal fade" id="editCategoriaModal" tabindex="-1" aria-labelledby="editCategoriaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="../Controller/editar_categoria.php" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoriaModalLabel">Editar Categoria</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_id_categoria" name="id_categoria">
+                        <div class="mb-3">
+                            <label for="edit_nome_categoria" class="form-label">Nome da Categoria:</label>
+                            <input type="text" class="form-control" id="edit_nome_categoria" name="nome_categoria" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/script.js"></script>
 </body>
+
 </html>

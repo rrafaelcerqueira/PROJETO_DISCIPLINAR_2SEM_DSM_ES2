@@ -137,7 +137,6 @@ class Tarefa
                     data_expiracao = ?, 
                     descricao = ?, 
                     fk_categoria_id = ?, 
-                    fk_estado_id = ?,
                     data_conclusao = ?
                   WHERE 
                     id = ? AND fk_usuario_id = ?";
@@ -152,12 +151,11 @@ class Tarefa
         }
 
         $stmt->bind_param(
-            "sssiisii",
+            "sssisii",
             $this->nome,
             $this->data_expiracao,
             $this->descricao,
             $this->fk_categoria_id,
-            $this->fk_estado_id,
             $this->data_conclusao,
             $this->id,
             $this->fk_usuario_id

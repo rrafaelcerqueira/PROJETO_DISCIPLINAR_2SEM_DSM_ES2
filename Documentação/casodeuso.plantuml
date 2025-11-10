@@ -9,7 +9,6 @@ rectangle "Gerenciamento de Tarefas"{
     usecase "Cadastro de Tarefas" as UC3
     usecase "Edição de Tarefas" as UC4
     usecase "Exclusão de Tarefas" as UC5
-    usecase "Arquivamento de Tarefas" as UC6
     usecase "Conclusão de Tarefas" as UC7
     usecase "Visualização de Tarefas" as UC8
     usecase "Cadastro de Categoria" as UC9
@@ -22,7 +21,6 @@ u --> UC2
 u --> UC3
 u --> UC4
 u --> UC5
-u --> UC6
 u --> UC7
 u --> UC8
 u --> UC9
